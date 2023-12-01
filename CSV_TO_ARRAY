@@ -1,0 +1,134 @@
+Lets see how CSV data change in to arrays , There are 3 examples for learn .
+
+
+
+Example 1: Default Case
+
+javascript
+
+const csvData1 = 'name,age\nJohn,25\nJane,30\nBob,22';
+console.log(csv_to_array(csvData1));
+
+Output:
+
+javascript
+
+[
+  ['name', 'age'],
+  ['John', '25'],
+  ['Jane', '30'],
+  ['Bob', '22']
+]
+
+In this example, the default delimiter , is used, and the function includes the first row in the resulting array.
+
+Example 2: Custom Delimiter
+
+javascript
+
+const csvData2 = 'id;name;age\n1;John;25\n2;Jane;30\n3;Bob;22';
+console.log(csv_to_array(csvData2, ';'));
+
+Output:
+
+javascript
+
+[
+  ['id', 'name', 'age'],
+  ['1', 'John', '25'],
+  ['2', 'Jane', '30'],
+  ['3', 'Bob', '22']
+]
+
+Here, a custom delimiter ; is used to split the values, and the first row is included in the resulting array.
+
+Example 3: Omitting the First Row
+
+javascript
+
+const csvData3 = 'id,name,age\n1,John,25\n2,Jane,30\n3,Bob,22';
+console.log(csv_to_array(csvData3, ',', true));
+
+Output:
+
+javascript
+
+[
+  ['1', 'John', '25'],
+  ['2', 'Jane', '30'],
+  ['3', 'Bob', '22']
+]
+
+In this case, the first row is omitted from the resulting array by setting omitFirstRow to true.
+
+These examples demonstrate how the csv_to_array function can be used with different CSV data and options to convert it into a JavaScript array.
+User
+const csvData2 = 'id;name;age\n1;John;25\n2;Jane;30\n3;Bob;22';
+console.log(csv_to_array(csvData2, ';'));
+Here, a custom delimiter ; is used to split the values, and the first row is included in the resulting array.
+
+but  how spilit and which value?
+ChatGPT
+
+Certainly, let's break down the csv_to_array function call for the given example csvData2:
+
+javascript
+
+const csvData2 = 'id;name;age\n1;John;25\n2;Jane;30\n3;Bob;22';
+console.log(csv_to_array(csvData2, ';'));
+
+In this case, the function call specifies the CSV data csvData2 and a custom delimiter ;. Let's go through how the function processes this data:
+
+    Input Data:
+
+    plaintext
+
+id;name;age
+1;John;25
+2;Jane;30
+3;Bob;22
+
+Processing Steps:
+
+    The function uses the custom delimiter ; to split each row of the CSV data.
+    The first row (id;name;age) is split into an array using ; as the delimiter: ['id', 'name', 'age'].
+    The subsequent rows (1;John;25, 2;Jane;30, 3;Bob;22) are also split into arrays using ; as the delimiter: ['1', 'John', '25'], ['2', 'Jane', '30'], ['3', 'Bob', '22'].
+
+Resulting Array:
+
+The resulting array, when printed to the console, would look like this:
+
+javascript
+
+    [
+      ['id', 'name', 'age'],
+      ['1', 'John', '25'],
+      ['2', 'Jane', '30'],
+      ['3', 'Bob', '22']
+    ]
+
+So, in summary, the function splits each row of the CSV data into an array of values using the specified custom delimiter (; in this case), resulting in a 2D array where each inner array represents a row with individual values. The first row is included in the resulting array.
+
+
+Csv to object Array----------------------------------------------------------------------------------------------------------------
+function csvtoJson(csvdata,delimeter= ','){
+    const rows = csvdata.split('\n');
+    const headers = rows[0].split(delimeter);
+    const jsondata = [];
+   // Arrays are ordered lists and are created using square brackets, like [].//
+    for(let i=0;i<rows.length;i++){
+         const values = rows[i].split(delimeter);
+        const rowObject = {};
+        //Objects are collections of key-value pairs and are created using curly braces, like {}.
+        for(let j=0;j<headers.length;j++){
+            rowObject[headers[j]] = values[j];
+        }
+    jsondata.push(rowObject);
+}
+return jsondata;
+}
+const csvData1 = 'col1,col2\na,b\nc,d';
+console.log(csvtoJson(csvData1));
+
+const csvData2 = 'col1;col2\na;b\nc;d';
+console.log(csvtoJson(csvData2, ';'));
